@@ -4,6 +4,7 @@ import colors from "colors";
 import morgan from "morgan";
 import cors from "cors";
 import testRouter from "./routes/test.route.js";
+import authRouter from "./routes/auth.route.js";
 import connectDB from "./config/db.js";
 
 dotenv.config(); // if .env file is not in root folder then we have to do something like this dotenv.config({path:'./config/'});
@@ -22,4 +23,5 @@ app.listen(PORT, () => {
   console.log(`server is running on port ${PORT}`.bgBlue.white);
 });
 
-app.use("/api/v1", testRouter);
+app.use("/api", testRouter);
+app.use("/api", authRouter);
