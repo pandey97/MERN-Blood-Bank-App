@@ -19,6 +19,7 @@ export const registerController = async(req, res) => {
     return res.status(201).send({
       success: true,
       message: "User Register Successfully",
+      user
     });
   } catch (error) {
     console.log(error);
@@ -50,7 +51,8 @@ export const loginController = async(req, res) => {
     const token = jwt.sign({userId:user._id}, process.env.JWT_SECRET,{expiresIn:'1d'});
     return res.status(200).send({
       success: true,
-      message:'Login Successfully'
+      message:'Login Successfully',
+      user
     })
   } catch (error) {
     console.log(error);
@@ -61,3 +63,21 @@ export const loginController = async(req, res) => {
     });
   }
 }
+
+export const currentUserController = async(req, res) => {
+  try {
+    const user = await User.findOne({_id:req.body.userId});
+    return res.status(200).send({
+      success: true,
+      message:'User fetch successfully',
+      user
+    })
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: 'Unable to get current user'
+    })
+  }
+}
+
