@@ -1,5 +1,6 @@
 import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
+import jwt from 'jsonwebtoken';
 
 export const registerController = async(req, res) => {
   try {
@@ -28,3 +29,35 @@ export const registerController = async(req, res) => {
     });
   }
 };
+
+export const loginController = async(req, res) => {
+  try {
+    const {email, password} = req.body;
+    const user = await User.findOne({email});
+    if(!user){
+      return res.status(404).send({
+        success: false,
+        message: 'Invalid Credential'
+      })
+    }
+    const comparePassword = bcryptjs.compareSync(password, user.password);
+    if(!comparePassword){
+      return res.status(500).send({
+        success: false,
+        message: 'Invalid Credential'
+      })
+    }
+    const token = jwt.sign({userId:user._id}, process.env.JWT_SECRET,{expiresIn:'1d'});
+    return res.status(200).send({
+      success: true,
+      message:'Login Successfully'
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in login API",
+      error,
+    });
+  }
+}
