@@ -24,6 +24,6 @@ app.listen(PORT, () => {
   console.log(`server is running on port ${PORT}`.bgBlue.white);
 });
 
-app.use("/api", testRouter);
-app.use("/api", authRouter);
-app.use("/api", inventoryRouter);
+app.use("/api/test", testRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/inventory", inventoryRouter);
