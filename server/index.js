@@ -5,6 +5,7 @@ import morgan from "morgan";
 import cors from "cors";
 import testRouter from "./routes/test.route.js";
 import authRouter from "./routes/auth.route.js";
+import inventoryRouter from "./routes/inventory.route.js";
 import connectDB from "./config/db.js";
 
 dotenv.config(); // if .env file is not in root folder then we have to do something like this dotenv.config({path:'./config/'});
@@ -25,3 +26,4 @@ app.listen(PORT, () => {
 
 app.use("/api", testRouter);
 app.use("/api", authRouter);
+app.use("/api", inventoryRouter);
