@@ -1,7 +1,7 @@
 import Inventory from "../models/inventory.model.js";
 import User from "../models/user.model.js";
 
-export const createInventoryController = async() => {
+export const createInventoryController = async(req, res) => {
     try {
         const {email, inventoryType} = req.body;
         const user = await User.findOne({email});
@@ -22,7 +22,7 @@ export const createInventoryController = async() => {
         })
     } catch (error) {
         console.log(error);
-        return resizeBy.status(500).send({
+        return res.status(500).send({
             success: false,
             message: 'Error in creat inventory API',
             error
