@@ -3,7 +3,7 @@ import React from "react";
 const InputType = (props) => {
   return (
     <>
-      <div className="mb-3">
+      <div className="mb-1">
         <label htmlFor="exampleInputEmail1" className="form-label">
           {props.labelText}
         </label>

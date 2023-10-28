@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import InputType from "./InputType";
+import { Link } from "react-router-dom";
+import { handleLogin, handleRegister } from "../../../services/authService";
 
 const Form = (props) => {
   const [email, setEmail] = useState("");
@@ -14,7 +16,11 @@ const Form = (props) => {
 
   return (
     <div>
-      <form>
+      <form onSubmit={(e)=>{
+        if(props.formType === 'login') return handleLogin(e,email,password,role)
+        else if(props.formType === 'register') return handleRegister(e,email,password,role,name,organisationName,hospitalName,website,address,phone)
+      }} 
+      className="mb-3">
         <h1 className="text-center">{props.formTitle}</h1>
         <hr />
         <div className="d-flex mb-3">
@@ -100,21 +106,21 @@ const Form = (props) => {
                   )}
                   {role === "organisation" && (
                     <InputType
-                    labelText={"Organisation Name"}
-                    InputType={"text"}
-                    name={"organisationName"}
-                    value={organisationName}
-                    onChange={(e) => setOrganisationName(e.target.value)}
-                  />
+                      labelText={"Organisation Name"}
+                      InputType={"text"}
+                      name={"organisationName"}
+                      value={organisationName}
+                      onChange={(e) => setOrganisationName(e.target.value)}
+                    />
                   )}
                   {role === "hospital" && (
                     <InputType
-                    labelText={"Hospital Name"}
-                    InputType={"text"}
-                    name={"hospitalName"}
-                    value={hospitalName}
-                    onChange={(e) => setHospitalName(e.target.value)}
-                  />
+                      labelText={"Hospital Name"}
+                      InputType={"text"}
+                      name={"hospitalName"}
+                      value={hospitalName}
+                      onChange={(e) => setHospitalName(e.target.value)}
+                    />
                   )}
                   <InputType
                     labelText={"Email address"}
@@ -154,9 +160,21 @@ const Form = (props) => {
                 </>
               );
             }
+            default : return;
           }
         })()}
-        <div className="d-flex">
+        <div className="d-flex flex-row justify-content-between">
+          {props.formType === "login" ? (
+            <p className="align-self-center">
+              Not registered yet ? Register
+              <Link to="/register"> Here !</Link>
+            </p>
+          ) : (
+            <p className="align-self-center">
+              Already User Please
+              <Link to="/login"> Login !</Link>
+            </p>
+          )}
           <button type="submit" className="btn btn-primary">
             {props.submitButton}
           </button>
