@@ -22,19 +22,19 @@ const inventorySchema = new mongoose.Schema(
       },
       organisation: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
+        ref: "User",
         required: [true, "organisation is require"],
       },
       hospital: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
+        ref: "User",
         required: function () {
           return this.inventoryType === "out";
         },
       },
       donar: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
+        ref: "User",
         required: function () {
           return this.inventoryType === "in";
         },
